@@ -9,8 +9,8 @@ export default function Index({ auth, leads, filters }) {
   const updateQuery = (params) => {
     setLoading(true);
 
-    router.get(
-      "/leads",
+    router.post(
+      "/leads/filter",
       { ...filters, ...params },
       {
         preserveState: true,
