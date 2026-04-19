@@ -21,8 +21,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::match(['get', 'post'], '/leads/filter', [LeadController::class, 'index'])->name('leads.filter');
     Route::resource('leads', LeadController::class);
-    Route::post('/leads/filter', [LeadController::class, 'index']);
     Route::patch('/leads/{lead}/status', [LeadController::class, 'updateStatus'])->name('leads.status');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

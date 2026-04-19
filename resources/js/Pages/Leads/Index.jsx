@@ -159,19 +159,35 @@ export default function Index({ auth, leads, filters }) {
         </table>
 
         <div className="mt-4 flex gap-2 flex-wrap">
-          {leads.links.map((link, index) => (
-            <button
-              key={index}
-              disabled={!link.url}
-              onClick={() =>
-                link.url && router.get(link.url, {}, { preserveState: true })
+          {leads.links.map((link, index) => {
+            const getPage = (url) => {
+              if (!url) return null;
+              const urlParts = url.split("?");
+              if (urlParts.length > 1) {
+                return new URLSearchParams(urlParts[1]).get("page");
               }
-              dangerouslySetInnerHTML={{ __html: link.label }}
-              className={`px-3 py-1 border ${
-                link.active ? "bg-blue-500 text-white" : ""
-              }`}
-            />
-          ))}
+              return null;
+            };
+
+            return (
+              <button
+                key={index}
+                disabled={!link.url}
+                onClick={() => {
+                  if (link.url) {
+                    const page = getPage(link.url);
+                    if (page) {
+                      updateQuery({ page });
+                    }
+                  }
+                }}
+                dangerouslySetInnerHTML={{ __html: link.label }}
+                className={`px-3 py-1 border ${
+                  link.active ? "bg-blue-500 text-white" : ""
+                }`}
+              />
+            );
+          })}
         </div>
       </div>
     </AuthenticatedLayout>
