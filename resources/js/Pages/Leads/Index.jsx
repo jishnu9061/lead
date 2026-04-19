@@ -3,6 +3,7 @@ import { router } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 export default function Index({ auth, leads, filters }) {
+  
   const [search, setSearch] = useState(filters.search || "");
   const [loading, setLoading] = useState(false);
 
